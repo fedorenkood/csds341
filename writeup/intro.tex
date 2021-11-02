@@ -1,0 +1,58 @@
+\documentclass[12pt, oneside, a4paper]{article}
+
+% for math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+% for inserting images
+\usepackage{graphicx}
+% for algorithm pseudocode
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+% for tables
+\usepackage{tabularx}
+% for implementation of the array and tabular environments
+\usepackage{array}
+% Control float placement. Defines a \FloatBarrier command
+\usepackage{placeins}
+% for derivative commands
+\usepackage{physics}
+% for multi level lists
+\usepackage{outlines} 
+% for links in text
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=black,bookmarksopen=true]{hyperref}
+% for contents after pdf is formed
+\usepackage{bookmark}
+% for caption
+\usepackage{caption}
+% for code
+\usepackage{listings}
+% for pictures
+\usepackage{tikz}
+
+
+\def\nudge{.5}
+\tikzset{axis/.style={ultra thick, black, -latex, shorten <=-\nudge cm, shorten >=-2*\nudge cm}}
+\tikzset{line/.style={thick,green}}
+
+\hypersetup{%
+  colorlinks=true,
+  linkcolor=blue,
+  linkbordercolor={0 0 1}
+}
+
+\newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\vt}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\uline}[1]{\underline{#1}}
+\newcommand{\tb}[1]{\textbf{#1}}
+
+\DeclareUnicodeCharacter{2212}{\textendash}
+
+\graphicspath{ {./images/} }
+
+\title{CSDS 440: Written Assignments}
+\author{Oleksii Fedorenko}
+
+\begin{document}
+    \maketitle
+
+\end{document}
