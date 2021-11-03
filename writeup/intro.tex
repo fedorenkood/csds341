@@ -63,4 +63,18 @@
     The Internet now allows for the possibility of giving people the power to create their own questionnaires and distribute
     them easily. Our project allows for the convenient creation of questionnaires and answering of questionnaires. Additionally,
     we allow for analysis of data to an advanced degree that is not available in most extant questionnaire and survey websites.
+    \section{Data Description and Schemas}
+    \textbf{Entities}
+    \\
+    Users(user\_id       INT,\\
+          first\_name    CHAR(30),\\
+          last\_name     CHAR(30),\\
+          email         CHAR(50)\\
+          PRIMARY KEY(user\_id)\\
+    )
+    \\
+    \\
+    This entity represents users of the questionnaire website.
+    All types of users, including people who create questionnaires
+    or answer questionnaires, are in this table.
 \end{document}
