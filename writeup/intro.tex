@@ -72,7 +72,9 @@
             first_name VARCHAR(40),
             last_name VARCHAR(40),
             email VARCHAR(100),
-            PRIMARY KEY(user_id)
+            subscription_id INT, 
+            PRIMARY KEY(user_id),
+            FOREIGN KEY(subscription_id)
         ) 
     \end{lstlisting}
     This entity represents users of the questionnaire website.
@@ -84,14 +86,15 @@
         CREATE TABLE Permissions (
             permission_id INT,
             user_id INT,
-            question_id INT,
+            questionaire_id INT,
             role_id INT,
             PRIMARY KEY (permission_id),
-            FOREIGN KEY(user_id)
+            FOREIGN KEY(user_id),
+            FOREIGN KEY(questionaire_id)
         ) 
     \end{lstlisting}
     This entity describes the permission level of a user for each 
-    questionaire, this is part of a ternary relationship between users, questionaire, and permission.
+    questionaire, this is part of a ternary relationship between users, questionaire, and permission. User and Questionaire entities are not fully participating in this table. 
     \\
     
     \begin{lstlisting}[language=SQL, columns=flexible]
@@ -103,7 +106,7 @@
             PRIMARY KEY(role_id)
         ) 
     \end{lstlisting}
-    This entity describes the roles that are allowed for each permission evel. For each role there are different permissions that are dependent on a true or false value (BIT) in SQL. For each user the permission level determines what roles they have.
+    This entity describes the roles that are allowed for each permission evel. For each role there are different permissions that are dependent on a true or false value (BIT) in SQL. For each tuple of user and survey the permission level determines what roles they have.
     \\
 
     \begin{lstlisting}[language=SQL, columns=flexible]
@@ -113,6 +116,8 @@
             PRIMARY KEY(subscription_id)
         ) 
     \end{lstlisting}
+    Describes the subscription level how many surveys users are allowed to create at each subscription level. 
+    \\
 
     \begin{lstlisting}[language=SQL, columns=flexible]
         CREATE TABLE Questionnaire (
@@ -121,15 +126,21 @@
             PRIMARY KEY(questionnaire_id)
         ) 
     \end{lstlisting}
+    Defines a questionaire with the unique id, that will be bound to a user using the permissions table. 
+    \\
+
     \begin{lstlisting}[language=SQL, columns=flexible]
         CREATE TABLE Questions (
             question_id BIGINT,
             questionaire_id INT,
             question_text VARCHAR(400), 
-            PRIMARY KEY(subscription_id),
+            PRIMARY KEY(question_id),
             FOREIGN KEY(questionaire_id)
         ) 
     \end{lstlisting}
+    Determines questions as they are related to each questionaire. 
+    \\
+
     \begin{lstlisting}[language=SQL, columns=flexible]
         CREATE TABLE Possible_Answers (
             option_id BIGINT,
@@ -139,17 +150,23 @@
             FOREIGN KEY(question_id)
         ) 
     \end{lstlisting}
+    Defines possible answeres to each question. e.g. for multiple choice question, this will have entries for each possible answer, while questions like rate this place will have the range of ranking available. 
+    \\
+
     \begin{lstlisting}[language=SQL, columns=flexible]
         CREATE TABLE Responses (
             response_id INT,
             user_id INT,
             option_id BIGINT, 
-            date_time VARCHAR(400),
-            PRIMARY KEY(option_id),
+            date_time DATETIME,
+            PRIMARY KEY(response_id),
             FOREIGN KEY(user_id), 
             FOREIGN KEY(option_id)
         ) 
     \end{lstlisting}
+    Defines the user response to each of the questions, and ties them to the unique response option identifier and user id.
+    \\
+
     Possible queries: 
     \begin{outline}
         \1 Check if user answered the survey
@@ -162,5 +179,12 @@
         \1 Distributions of responses to a question based on filters like date
         \1 Number of responses to a specific question
         \1 Query the number of times the question has been asked vs the response rate
+        \1 did person hit the limit of the number of questionaires to create
+    \end{outline}
+    
+    Improving performance:
+    \begin{outline}
+        \1 Create various table indexes
+        \1 Create materialized views to improve performance on some of the queries
     \end{outline}
 \end{document}
