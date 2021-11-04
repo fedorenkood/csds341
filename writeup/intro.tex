@@ -66,13 +66,26 @@
     \section{Data Description and Schemas}
     \textbf{Entities}
     \\
-    Users(user\_id       INT,\\
-          first\_name    CHAR(30),\\
-          last\_name     CHAR(30),\\
-          email         CHAR(50)\\
-          PRIMARY KEY(user\_id)\\
+    Users(\underline{user\_id} \indent\indent INT,\\
+    \hphantom{Users(}first\_name \indent CHAR(30),\\
+    \hphantom{Users(}last\_name \indent \thinspace CHAR(30),\\
+    \hphantom{Users(}email \indent\indent\ \thinspace CHAR(50)\\
+    \hphantom{Users(}PRIMARY KEY(user\_id)\\
     )
     \\
+    \\
+    Permission(\underline{user\_id} \indent \ \thinspace INT,\\
+    \hphantom{Permission(}\underline{quest\_id} \indent INT,\\
+    \hphantom{Permission(}\underline{role\_id} \indent INT\\
+    )
+    \\
+    \\
+    Roles(\underline{role\_id} \indent\indent\indent \ \ \ INT,\\
+    \hphantom{Roles(}edit\_perm \indent\indent\ \ \ BIT,\\
+    \hphantom{Roles(}resp\_perm \indent\indent\ \ \thinspace BIT,\\
+    \hphantom{Roles(}view\_resp\_perm \indent BIT,\\
+    \hphantom{Roles(}PRIMARY KEY(\underline{role\_id})\\
+    )
     \\
     This entity represents users of the questionnaire website.
     All types of users, including people who create questionnaires
