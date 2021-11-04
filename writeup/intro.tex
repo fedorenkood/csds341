@@ -73,13 +73,18 @@
     \hphantom{Users(}PRIMARY KEY(user\_id)\\
     )
     \\
-    \\
+    This entity represents users of the questionnaire website.
+    All types of users, including people who create questionnaires
+    or answer questionnaires, are in this table.
+    \\\\
     Permission(\underline{user\_id} \indent \ \thinspace INT,\\
     \hphantom{Permission(}\underline{quest\_id} \indent INT,\\
     \hphantom{Permission(}\underline{role\_id} \indent INT\\
     )
     \\
-    \\
+    This entity describes the permission level of a user for each 
+    questionaire, this is part of a ternary relationship between users, questionaire, and permission.
+    \\\\
     Roles(\underline{role\_id} \indent\indent\indent \ \ \ INT,\\
     \hphantom{Roles(}edit\_perm \indent\indent\ \ \ BIT,\\
     \hphantom{Roles(}resp\_perm \indent\indent\ \ \thinspace BIT,\\
@@ -87,8 +92,9 @@
     \hphantom{Roles(}PRIMARY KEY(\underline{role\_id})\\
     )
     \\
-    This entity represents users of the questionnaire website.
-    All types of users, including people who create questionnaires
-    or answer questionnaires, are in this table.
+    This entity describes the roles that are allowed for each permission level. For each role there are
+    different permissions that are dependent on a true or false value (BIT) in SQL. For each user the 
+    permission level determines what roles they have.
+    \\\\
     \section{ER Diagram}
 \end{document}
