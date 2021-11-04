@@ -55,46 +55,112 @@
 \begin{document}
     \maketitle
     \section{Background}
-    Questionnaires and surveys are very important for understanding and shaping the world. The United States uses the Census and the
-    American Community Survey to understand how the country is changing and to make decisions about how to allocate its
-    resources. Researchers use questionnaires for scientific studies to understand both the social and natural worlds.
-    Psychologists in particular make great use of Likert scales in questionnaires to help build our collective knowledge.
-    Until recently, however, the technologies for creating, collecting, and analyzing questionnaires did not exist.
-    The Internet now allows for the possibility of giving people the power to create their own questionnaires and distribute
-    them easily. Our project allows for the convenient creation of questionnaires and answering of questionnaires. Additionally,
-    we allow for analysis of data to an advanced degree that is not available in most extant questionnaire and survey websites.
+    Questionnaires and surveys are very important for understanding and shaping the world. Surveys are one of the main tools for collection and analysis of data for making decisions. For example, United States uses the Census and the American Community Survey to understand how country demographics is shifting and to make decisions about the allocation of resources. Researchers use questionnaires for scientific studies to understand both the social and natural worlds. Psychologists in particular make great use of Likert scales in questionnaires to help build our collective knowledge.
+    
+    Therefore, streamlining the process of collectiong and analysing surveys using technology is very beneficial for making decisions. Our application would allow users to create their own questionnaires, distribute and analyse them easily. Additionally, application would allow for streamlining the decision making process based on the analysis of data to an advanced degree.
+    
+
+    \newpage    
+    \section{ER Diagram}
+
+
+    \newpage
     \section{Data Description and Schemas}
-    \textbf{Entities}
-    \\
-    Users(\underline{user\_id} \indent\indent INT,\\
-    \hphantom{Users(}first\_name \indent CHAR(30),\\
-    \hphantom{Users(}last\_name \indent \thinspace CHAR(30),\\
-    \hphantom{Users(}email \indent\indent\ \thinspace CHAR(50)\\
-    \hphantom{Users(}PRIMARY KEY(user\_id)\\
-    )
-    \\
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Users (
+            user_id INT,
+            first_name VARCHAR(40),
+            last_name VARCHAR(40),
+            email VARCHAR(100),
+            PRIMARY KEY(user_id)
+        ) 
+    \end{lstlisting}
     This entity represents users of the questionnaire website.
     All types of users, including people who create questionnaires
     or answer questionnaires, are in this table.
-    \\\\
-    Permission(\underline{user\_id} \indent \ \thinspace INT,\\
-    \hphantom{Permission(}\underline{quest\_id} \indent INT,\\
-    \hphantom{Permission(}\underline{role\_id} \indent INT\\
-    )
     \\
+
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Permissions (
+            permission_id INT,
+            user_id INT,
+            question_id INT,
+            role_id INT,
+            PRIMARY KEY (permission_id),
+            FOREIGN KEY(user_id)
+        ) 
+    \end{lstlisting}
     This entity describes the permission level of a user for each 
     questionaire, this is part of a ternary relationship between users, questionaire, and permission.
-    \\\\
-    Roles(\underline{role\_id} \indent\indent\indent \ \ \ INT,\\
-    \hphantom{Roles(}edit\_perm \indent\indent\ \ \ BIT,\\
-    \hphantom{Roles(}resp\_perm \indent\indent\ \ \thinspace BIT,\\
-    \hphantom{Roles(}view\_resp\_perm \indent BIT,\\
-    \hphantom{Roles(}PRIMARY KEY(\underline{role\_id})\\
-    )
     \\
-    This entity describes the roles that are allowed for each permission level. For each role there are
-    different permissions that are dependent on a true or false value (BIT) in SQL. For each user the 
-    permission level determines what roles they have.
-    \\\\
-    \section{ER Diagram}
+    
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Roles (
+            role_id INT,
+            edit_perm BIT, 
+            resp_perm BIT,
+            view_resp_perm BIT,
+            PRIMARY KEY(role_id)
+        ) 
+    \end{lstlisting}
+    This entity describes the roles that are allowed for each permission evel. For each role there are different permissions that are dependent on a true or false value (BIT) in SQL. For each user the permission level determines what roles they have.
+    \\
+
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Subscription (
+            subscription_id INT,
+            survey_limit INT, 
+            PRIMARY KEY(subscription_id)
+        ) 
+    \end{lstlisting}
+
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Questionnaire (
+            questionnaire_id INT,
+            number_of_questions INT, 
+            PRIMARY KEY(questionnaire_id)
+        ) 
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Questions (
+            question_id BIGINT,
+            questionaire_id INT,
+            question_text VARCHAR(400), 
+            PRIMARY KEY(subscription_id),
+            FOREIGN KEY(questionaire_id)
+        ) 
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Possible_Answers (
+            option_id BIGINT,
+            question_id BIGINT, 
+            possible_answer VARCHAR(400),
+            PRIMARY KEY(option_id),
+            FOREIGN KEY(question_id)
+        ) 
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible]
+        CREATE TABLE Responses (
+            response_id INT,
+            user_id INT,
+            option_id BIGINT, 
+            date_time VARCHAR(400),
+            PRIMARY KEY(option_id),
+            FOREIGN KEY(user_id), 
+            FOREIGN KEY(option_id)
+        ) 
+    \end{lstlisting}
+    Possible queries: 
+    \begin{outline}
+        \1 Check if user answered the survey
+        \1 Check if user has permission to edit 
+        \1 Check if user has permission to see analysis
+        \1 Retrieve user answeres
+        \1 Retrive answer counts per question per questionaire
+        \1 Retrieve quetions related to questionaire
+        \1 Retrieve possible answers related to question
+        \1 Distributions of responses to a question based on filters like date
+        \1 Number of responses to a specific question
+        \1 Query the number of times the question has been asked vs the response rate
+    \end{outline}
 \end{document}
