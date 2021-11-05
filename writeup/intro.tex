@@ -97,7 +97,8 @@
             role_id INT,
             PRIMARY KEY (permission_id),
             FOREIGN KEY(user_id REFERENCES Users(user_id)),
-            FOREIGN KEY(questionnaire_id REFERENCES Questionnaires(questionnaire_id))
+            FOREIGN KEY(questionnaire_id REFERENCES Questionnaires(questionnaire_id)),
+            FOREIGN KEY(role_id REFERENCES Roles(role_id))
         ) 
     \end{lstlisting}
     This entity describes the permission level of a user for each 
