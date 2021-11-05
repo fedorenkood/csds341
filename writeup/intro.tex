@@ -52,16 +52,16 @@
 \title{CSDS 341: Final Project Initial Report\\ Questionnaire Website}
 \author{Oleksii Fedorenko, David Frost, Matthew Garcia, Preeti Naik}
 
-\begin{document}
+\begin{document} 
     \maketitle
     \section{Background}
-    Questionnaires and surveys are very important for understanding and shaping the world. Surveys are one of the main tools for collection and analysis of data for making decisions. For example, United States uses the Census and the American Community Survey to understand how country demographics is shifting and to make decisions about the allocation of resources. Researchers use questionnaires for scientific studies to understand both the social and natural worlds. Psychologists in particular make great use of Likert scales in questionnaires to help build our collective knowledge.
+    Questionnaires and surveys are very important for understanding and shaping the world. Surveys are one of the main tools for collection and analysis of data for making decisions. For example, United States uses the Census and the American Community Survey to understand how country demographics is shifting and to make decisions about the allocation of resources. Researchers use questionnaires for scientific studies to understand both the social and natural worlds. Psychologists in particular make great use of Likert scales in questionnaires to help build our collective knowledge.   
     
     Therefore, streamlining the process of collectiong and analysing surveys using technology is very beneficial for making decisions. Our application would allow users to create their own questionnaires, distribute and analyse them easily. Additionally, application would allow for streamlining the decision making process based on the analysis of data to an advanced degree.
     
 
     \newpage    
-    \section{ER Diagram}
+    \section{ER Diagram}  
 
     \FloatBarrier
     \begin{figure}[H] 
@@ -138,7 +138,7 @@
     \\
 
     \begin{lstlisting}[language=SQL, columns=flexible]
-        CREATE TABLE Questions (
+        CREATE TABLE Questions ( 
             question_id BIGINT,
             questionnaire_id INT,
             question_text VARCHAR(400), 
@@ -175,7 +175,7 @@
     Defines the user response to each of the questions, and ties them to the unique response option identifier and user id.
     \\
 
-    Possible queries: 
+    Possible queries:   
     \begin{outline}
         \1 Check if user answered the survey
         \1 Check if user has permission to edit 
