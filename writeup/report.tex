@@ -1,0 +1,113 @@
+\documentclass[12pt, oneside, a4paper]{article}
+% for math symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+% for inserting images
+\usepackage{graphicx}
+% for algorithm pseudocode
+\usepackage[noend]{algpseudocode}
+\usepackage[nothing]{algorithm}
+\algrenewcommand{\algorithmicrequire}{\textbf{Input:}}
+\algrenewcommand{\algorithmicensure}{\textbf{Output:}}
+\algnewcommand\And{\textbf{and} }
+% for tables
+\usepackage{tabularx}
+% for implementation of the array and tabular environments
+\usepackage{array}
+% Control float placement. Defines a \FloatBarrier command
+\usepackage{placeins}
+% for derivative commands
+\usepackage{physics}
+% for multi level lists
+\usepackage{outlines} 
+% for links in text
+\usepackage[colorlinks=true,linkcolor=blue,urlcolor=black,bookmarksopen=true]{hyperref} 
+% for contents after pdf is formed
+\usepackage{bookmark}
+\usepackage{xcolor}
+% for code in text
+\usepackage{listings}
+\usepackage{pythonhighlight}
+
+
+\newcommand{\vect}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\vt}[1]{\ensuremath{\mathbf{#1}}}
+\newcommand{\uline}[1]{\underline{#1}}
+\newcommand{\tb}[1]{\textbf{#1}}
+\newcommand{\ilcode}{\texttt}
+\newcommand{\p}{\partial}
+\newcommand{\vphi}{\varphi}
+
+\DeclareUnicodeCharacter{2212}{\textendash}
+
+\graphicspath{ {./images/} }
+
+\title{CSDS 341: Final Project Report\\ Questionnaire Website}
+\author{Oleksii Fedorenko, David Frost, Matthew Garcia, Preeti Naik}
+
+\begin{document}
+    \maketitle
+
+    \newpage
+    \section{BCNF}
+    \tb{Users} \\
+    This entity represents users of the questionnaire website.
+    All types of users, including people who create questionnaires
+    or answer questionnaires, are in this table. first\_name, last\_name, email, subscription\_id are attributes of the User and there is no FD between them. \\
+    R1 = (user\_id, first\_name, last\_name, email, subscription\_id) \\
+    F1 = \{user\_id \(\rightarrow\) first\_name, last\_name, email, subscription\_id; email \(\rightarrow\) user\_id, first\_name, last\_name, subscription\_id\} \\
+    Since, both user\_id and email are superkeys Users is in BCNF form. 
+    \\
+
+    \tb{Permissions} \\
+    This entity describes the permission level of a user for each 
+    questionnaire, this is part of a ternary relationship between users, questionnaire, and permission. user\_id, questionnaire\_id, role\_id are attributes of Permission and there is no FD in between them. \\
+    R2 = (permission\_id, user\_id, questionnaire\_id, role\_id) \\
+    F2 = \{permission\_id \(\rightarrow\) user\_id, questionnaire\_id, role\_id\} \\
+    Since permission\_id is a superkey Permissions is in BCNF form. 
+    \\
+    
+    \tb{Roles} \\
+    This entity describes the roles that are allowed for each permission evel. For each role there are different permissions that are dependent on a true or false value (BIT) in SQL. For each tuple of user and survey the permission level determines what roles they have. edit\_perm, resp\_perm, view\_resp\_perm are all attributes of a role with no FD between them. \\
+    R3 = (role\_id, edit\_perm, resp\_perm, view\_resp\_perm) \\
+    F3 = \{role\_id \(\rightarrow\) edit\_perm, resp\_perm, view\_resp\_perm\} \\
+    Since role\_id is a superkey Roles is in BCNF form. 
+    \\
+
+    \tb{Subscription} \\
+    Describes the subscription level and how many surveys users are allowed to create at each subscription level. \\
+    R4 = (subscription\_id, survey\_limit) \\
+    F4 = \{subscription\_id \(\rightarrow\) survey\_limit\} \\
+    Since subscription\_id is a superkey Subscription is in BCNF form. 
+    \\
+
+    \tb{Questionnaires} \\
+    Defines a questionnaire with the unique id that will be bound to a user using the permissions table. \\
+    R5 = (questionnaire\_id, number\_of\_questions) \\
+    F5 = \{questionnaire\_id, number\_of\_questions\} \\ 
+    Since questionnaire\_id is a superkey Questionnaires is in BCNF form. 
+    \\
+
+    \tb{Questions} \\
+    Determines questions as they are related to each questionnaire. questionnaire\_id, question\_text are attributes of Question with no FD between them. \\
+    R5 = (question\_id, questionnaire\_id, question\_text) \\
+    F5 = \{question\_id \(\rightarrow\) questionnaire\_id, question\_text\} \\
+    Since question\_id is a superkey Questions is in BCNF form. 
+    \\
+
+    \tb{Possible\_Answers} \\
+    Defines possible answers to each question. e.g. for multiple choice questions, this will have entries for each possible answer, while for questions like rating questions, this place will have the range of rankings available. question\_id, possible\_answer are attributes of an response option with no FD between them. \\
+    R6 = (option\_id, question\_id, possible\_answer) \\
+    F6 = \{option\_id \(\rightarrow\) question\_id, possible\_answer\} \\
+    Since option\_id is a superkey Possible\_Answers is in BCNF form. 
+    \\
+
+    \tb{Responses} \\
+    Defines the user response to each of the questions and ties them to the unique response option identifier and user id. user\_id, option\_id, date\_time have no FD between them. \\
+    R7 = (response\_id, user\_id, option\_id, date\_time) \\
+    F7 = \{response\_id $\rightarrow$ user\_id, option\_id, date\_time\} \\
+    Since response\_id is a superkey Responses is in BCNF form. 
+    \\
+
+
+\end{document}
