@@ -196,12 +196,20 @@
         \1 Create materialized views to improve performance on some of the queries
     \end{outline}
     \section{Functional Dependencies}
-    For the Users table, the only functional dependency is user\_id $\rightarrow$ first\_name, last\_name, email, subscription\_id.
-    This functional dependency exists because user\_id is a key for Users.
+    For the Users table, the functional dependencies (FDs) are user\_id $\rightarrow$ first\_name, last\_name, email, subscription\_id and email $\rightarrow$ user\_id ,first\_name, last\_name, subscription\_id.
+    The first functional dependency exists because user\_id is the primary key for Users and the second functional dependency exists because each email is associated with only one user, making it another candidate key for Users.
 
     For the Permissions table, the only functional dependency is permission\_id $\rightarrow$ user\_id, questionnaire\_id, role\_id.
     This functional dependency exists because permission\_id is a key for Permissions.
 
     For the Roles table, the only functional dependency is role\_id $\rightarrow$ edit\_perm, resp\_perm, view\_resp\_perm.
     This functional dependency exists because role\_id is a key for Roles.
+
+    For the Subscription table, the only functional dependency is subscription\_id $\rightarrow$ survey\_limit.
+    This functional dependency exists because subscription\_id is a key for Subscription.
+
+    For the Questionnaires table, the only functional dependency is questionnaire\_id $\rightarrow$ number\_of\_questions.
+    This functional dependency exists because questionnaire\_id is a key for Questionnaires.
+
+
 \end{document}
