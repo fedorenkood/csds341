@@ -102,15 +102,61 @@ CREATE TABLE Responses
 )
 
 /* Possible queries:
-    • Check if user answered the survey
-    • Check if user has permission to edit
-    • Check if user has permission to see analysis
-    • Retrieve user answers
     • Retrive answer counts per question per questionnaire
-    • Retrieve quetions related to questionnaire
-    • Retrieve possible answers related to question
     • Distributions of responses to a question based on filters like date
-    • Number of responses to a specific question
     • Query the number of times the question has been asked vs the response rate
     • Did person hit the limit of the number of questionnaires to create */
 
+
+/* Check if user answered the survey */
+SELECT *
+FROM Permissions
+WHERE questionnaire_id = "QuestionnaireID"
+    AND user_id = "UserID"
+    AND role_id = "respondent"
+
+/* Check if user has permission to edit for a specific questionnaire */
+SELECT *
+FROM Permissions
+WHERE questionnaire_id = "QuestionnaireID"
+    AND user_id = "UserID"
+    AND role_id = "editor"
+
+/* Check if user has permission to see analysis for a specific questionnaire */
+SELECT *
+FROM Permissions
+WHERE questionnaire_id = "QuestionnaireID"
+    AND user_id = "UserID"
+    AND role_id = "analyzer"
+
+
+/* Retrieve user answers for a specific questionnaire */
+SELECT r.response_id, r.option_id, r.date_time
+FROM (Questionnaires as q
+    INNER JOIN Questions as q2
+        INNER JOIN Possible_Answers as p
+            INNER JOIN Responses as r
+            on r.option_id = p.option_id
+        on p.question_id = q2.question_id
+    on q.questionnaire_id = q2.questionnaire_id)
+WHERE q.questionnaire_id = "QuestionnaireID"
+    AND r.user_id = "UserID"
+
+/* Retrieve questions related to questionnaire */
+SELECT *
+FROM Questions
+WHERE questionnaire_id = "QuestionnaireID"
+
+/* Retrieve possible answers related to question */
+SELECT *
+FROM Possible_Answers
+WHERE question_id = "QuestionID"
+
+/* Number of responses to a specific question */
+SELECT count(r.reponse_id)
+FROM (Questions as q
+    INNER JOIN Possible_Answers as p
+        INNER JOIN Responses as r
+        on r.option_id = p.option_id
+    on p.question_id = q.question_id)
+WHERE q.question_id = "QuestionID"
