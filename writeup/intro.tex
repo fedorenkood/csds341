@@ -195,4 +195,13 @@
         \1 Create various table indexes
         \1 Create materialized views to improve performance on some of the queries
     \end{outline}
+    \section{Functional Dependencies}
+    For the Users table, the only functional dependency is user\_id $\rightarrow$ first\_name, last\_name, email, subscription\_id.
+    This functional dependency exists because user\_id is a key for Users.
+
+    For the Permissions table, the only functional dependency is permission\_id $\rightarrow$ user\_id, questionnaire\_id, role\_id.
+    This functional dependency exists because permission\_id is a key for Permissions.
+
+    For the Roles table, the only functional dependency is role\_id $\rightarrow$ edit\_perm, resp\_perm, view\_resp\_perm.
+    This functional dependency exists because role\_id is a key for Roles.
 \end{document}
