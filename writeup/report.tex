@@ -51,6 +51,8 @@
     Questionnaires and surveys are very important for understanding and shaping the world. Surveys are one of the main tools for collection and analysis of data for making decisions. For example, United States uses the Census and the American Community Survey to understand how country demographics is shifting and to make decisions about the allocation of resources. Researchers use questionnaires for scientific studies to understand both the social and natural worlds. Psychologists in particular make great use of Likert scales in questionnaires to help build our collective knowledge. 
     \newline\newline\indent Therefore, streamlining the process of collecting and analysing surveys using technology is very beneficial for decision-making. Our application would allow users to create their own questionnaires, distribute and analyse them easily. Additionally, application would allow for streamlining the decision-making process based on the analysis of data to an advanced degree.
     \newline\newline\indent This will be accomplished through the design of the database allowing for multiple functionalities based on the user. With different roles and permissions a user will be able to participate in questionnaires or be the creator of a questionnaire. Then, questionnaires will have a certain amount of questions and these questions will have possible answers created by the maker of the questionnaire. Responses will be recorded and using the relationships in the database queries can be written to analyze the gathered data. This survey tool streamlines the process of creating and answering surveys and allows for data analysis to make decisions or understand the participants choices.
+    \section{Data Description}
+    \emph{Users} contains information about all of the users, both questionnaire creators and reponders, that interact with the website. Since our project depends on user-generated data, we had to artificially generate random data to demonstrate how our database works.
     \section{Functional Dependencies}
     For the Users table, the functional dependencies (FDs) are user\_id $\rightarrow$ first\_name, last\_name, email, subscription\_id and email $\rightarrow$ user\_id ,first\_name, last\_name, subscription\_id.
     The first functional dependency exists because user\_id is the primary key for Users and the second functional dependency exists because each email is associated with only one user, making it another candidate key for Users.
@@ -127,6 +129,8 @@
     F7 = \{response\_id $\rightarrow$ user\_id, option\_id, date\_time\} \\
     Since response\_id is a superkey Responses is in BCNF form. 
     \\
+    \section{Implementation}
+    
 
 
 \end{document}
