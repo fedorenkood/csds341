@@ -13,8 +13,8 @@ class LoginForm(FlaskForm):
 # registration form, used to get registration information
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
-    first_name = PasswordField('First Name', validators=[DataRequired()])
-    last_name = PasswordField('Last Name', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
     submit = SubmitField('Register')
     # make sure email is not empty or duplicate
     def validate_email(self, email):
