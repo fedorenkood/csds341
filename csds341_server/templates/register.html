@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="col-md-6 order-md-1">
+  <form class="needs-validation" novalidate>
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label for="firstName">Email</label>
+        {#<input type="text" class="form-control" id="firstName" placeholder="" value="" required>#}
+
+        {{ form.email(size = 60, placeholder = "Email",class_="form-control") }}
+        {% for error in form.email.errors %}
+        <div class="invalid-feedback">
+          [ {{ error}} ]
+        </div>
+        {% endfor %}
+        {{ form.first_name(size = 60, placeholder = "First Name",class_="form-control") }}
+        {{ form.last_name(size = 60, placeholder = "Last Name",class_="form-control") }}
+      </div>
+      {#<div class="col-md-6 mb-3">
+        <label for="lastName">Last name</label>
+        <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+        <div class="invalid-feedback">
+          Valid last name is required.
+        </div>
+      </div>#}
+    </div>
+    {#<button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>#}
+    {{form.submit(id_= 'submit',class_="btn btn-primary btn-lg btn-block")}}
+      <!-- redirect for register -->
+      <div class="col-md-12 mb-3">
+        Don`t have account? <a href="{{ url_for('register') }}">Sign up</a>
+      </div>
+  </form>
+</div>
+
+{% endblock %}

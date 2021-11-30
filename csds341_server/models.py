@@ -36,7 +36,7 @@ class User(db.Model):
 	user_id = db.Column(db.Integer, primary_key=True)
 	first_name = db.Column(db.String(40))
 	last_name = db.Column(db.String(40))
-	email = db.Column(db.String(100))
+	email = db.Column(db.String(100), unique=True)
 	subscription_id = db.Column(db.Integer, db.ForeignKey('Subscription.subscription_id'))
 
 
