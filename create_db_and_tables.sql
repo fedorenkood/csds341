@@ -19,7 +19,7 @@ CREATE TABLE Roles
     create at each subscription level.  */
 CREATE TABLE Subscription
 (
-    subscription_id INT,
+    subscription_id INT AUTO_INCREMENT,
     survey_limit INT,
     PRIMARY KEY(subscription_id)
 );
@@ -30,7 +30,7 @@ CREATE TABLE Subscription
     this table.  */
 CREATE TABLE Users
 (
-    user_id INT,
+    user_id INT AUTO_INCREMENT,
     first_name VARCHAR(40),
     last_name VARCHAR(40),
     email VARCHAR(100),
@@ -44,7 +44,7 @@ CREATE TABLE Users
     the permissions table.  */
 CREATE TABLE Questionnaires
 (
-    questionnaire_id INT,
+    questionnaire_id INT AUTO_INCREMENT,
     number_of_questions INT,
     PRIMARY KEY(questionnaire_id)
 );
@@ -53,7 +53,7 @@ CREATE TABLE Questionnaires
 /*  Determines questions as they are related to each questionnaire.  */
 CREATE TABLE Questions
 (
-    question_id BIGINT,
+    question_id BIGINT AUTO_INCREMENT,
     questionnaire_id INT,
     question_text VARCHAR(400),
     PRIMARY KEY(question_id),
@@ -66,7 +66,7 @@ CREATE TABLE Questions
     questions, this place will have the range of rankings available.  */
 CREATE TABLE Possible_Answers
 (
-    option_id BIGINT,
+    option_id BIGINT AUTO_INCREMENT,
     question_id BIGINT,
     possible_answer VARCHAR(400),
     PRIMARY KEY(option_id),
@@ -80,7 +80,7 @@ CREATE TABLE Possible_Answers
     in this table.  */
 CREATE TABLE Permissions
 (
-    permission_id INT,
+    permission_id INT AUTO_INCREMENT,
     user_id INT,
     questionnaire_id INT,
     role_id varchar(30),
@@ -95,7 +95,7 @@ CREATE TABLE Permissions
     response option identifier and user id.  */
 CREATE TABLE Responses
 (
-    response_id INT,
+    response_id INT AUTO_INCREMENT,
     user_id INT,
     option_id BIGINT,
     date_time DATETIME,
