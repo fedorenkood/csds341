@@ -36,7 +36,7 @@ CREATE TABLE Users
     email VARCHAR(100),
     subscription_id INT,
     PRIMARY KEY(user_id),
-    FOREIGN KEY(subscription_id) REFERENCES Subscription(subscription_id)
+    FOREIGN KEY(subscription_id) REFERENCES Subscription(subscription_id) ON DELETE CASCADE
 );
 
 
@@ -57,7 +57,7 @@ CREATE TABLE Questions
     questionnaire_id INT,
     question_text VARCHAR(400),
     PRIMARY KEY(question_id),
-    FOREIGN KEY(questionnaire_id) REFERENCES Questionnaires(questionnaire_id)
+    FOREIGN KEY(questionnaire_id) REFERENCES Questionnaires(questionnaire_id) ON DELETE CASCADE
 );
 
 
@@ -70,7 +70,7 @@ CREATE TABLE Possible_Answers
     question_id BIGINT,
     possible_answer VARCHAR(400),
     PRIMARY KEY(option_id),
-    FOREIGN KEY(question_id) REFERENCES Questions(question_id)
+    FOREIGN KEY(question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
 );
 
 
@@ -85,9 +85,9 @@ CREATE TABLE Permissions
     questionnaire_id INT,
     role_id varchar(30),
     PRIMARY KEY (permission_id),
-    FOREIGN KEY(user_id) REFERENCES Users(user_id),
-    FOREIGN KEY(questionnaire_id) REFERENCES Questionnaires(questionnaire_id),
-    FOREIGN KEY(role_id) REFERENCES Roles(role_id)
+    FOREIGN KEY(user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY(questionnaire_id) REFERENCES Questionnaires(questionnaire_id) ON DELETE CASCADE,
+    FOREIGN KEY(role_id) REFERENCES Roles(role_id) ON DELETE CASCADE
 );
 
 
@@ -100,6 +100,6 @@ CREATE TABLE Responses
     option_id BIGINT,
     date_time DATETIME,
     PRIMARY KEY(response_id),
-    FOREIGN KEY(user_id) REFERENCES Users(user_id),
-    FOREIGN KEY(option_id) REFERENCES Possible_Answers(option_id)
+    FOREIGN KEY(user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY(option_id) REFERENCES Possible_Answers(option_id) ON DELETE CASCADE
 );
