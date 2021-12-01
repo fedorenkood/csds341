@@ -33,7 +33,7 @@ CREATE TABLE Users
     user_id INT AUTO_INCREMENT,
     first_name VARCHAR(40),
     last_name VARCHAR(40),
-    email VARCHAR(100),
+    email VARCHAR(100) NOT NULL UNIQUE,
     subscription_id INT,
     PRIMARY KEY(user_id),
     FOREIGN KEY(subscription_id) REFERENCES Subscription(subscription_id) ON DELETE CASCADE
