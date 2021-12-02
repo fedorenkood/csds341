@@ -50,10 +50,21 @@ if __name__ == '__main__':
     subscriptions.append(Subscription(3, 100))
 
     users = []
+    states = ['AK', 'AL', 'AR', 'AZ', 'CA',     
+                   'CO', 'CT', 'DE', 'FL', 'GA',
+                   'HI', 'IA', 'ID', 'IL', 'IN',
+                   'KS', 'KY', 'LA', 'MA', 'MD', 
+                   'ME', 'MI', 'MN', 'MO', 'MS', 
+                   'MT', 'NC', 'ND', 'NE', 'NH', 
+                   'NJ', 'NM', 'NV', 'NY', 'OH',
+                   'OK', 'OR', 'PA', 'RI', 'SC',
+                   'SD', 'TN', 'TX', 'UT', 'VA', 
+                   'VT', 'WA', 'WI', 'WV', 'WY']
     for i in range(NUM_USERS):
         name = names.get_full_name().split(' ')
         subscription = random.choice(subscriptions)
-        users.append(User(len(users) + 1, name[0], name[1], subscription.subscription_id))
+        usstate = random.choice(states)
+        users.append(User(len(users) + 1, name[0], name[1], subscription.subscription_id, usstate))
 
     questionnaires = []
     questionnaires.append(Questionnaires(len(questionnaires) + 1, 5))
@@ -64,7 +75,7 @@ if __name__ == '__main__':
     questionnaires.append(Questionnaires(len(questionnaires) + 1, 50))
 
     example_questions = []
-    with open("questions.txt") as file:
+    with open("questions.txt", encoding="utf8") as file:
         lines = file.readlines()
         for line in lines:
             example_questions.append(line.replace("\'", "\\\'").rstrip())
@@ -147,7 +158,8 @@ if __name__ == '__main__':
             line += output_value(users[i].first_name) + ","
             line += output_value(users[i].last_name) + ","
             line += output_value(users[i].email) + ","
-            line += output_value(users[i].subscription_id) + ")"
+            line += output_value(users[i].subscription_id) + ","
+            line += output_value(users[i].state) + ")"
             if i < len(users) - 1:
                 line += ",\n"
             the_file.write(line)

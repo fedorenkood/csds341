@@ -35,6 +35,7 @@ CREATE TABLE Users
     last_name VARCHAR(40),
     email VARCHAR(100) NOT NULL UNIQUE,
     subscription_id INT,
+    state VARCHAR(10),
     PRIMARY KEY(user_id),
     FOREIGN KEY(subscription_id) REFERENCES Subscription(subscription_id) ON DELETE CASCADE
 );

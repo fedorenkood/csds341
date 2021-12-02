@@ -13,12 +13,13 @@ class Subscription:
 
 
 class User:
-	def __init__(self, user_id, first_name, last_name, subscription_id):
+	def __init__(self, user_id, first_name, last_name, subscription_id, state):
 		self.user_id = user_id
 		self.first_name = first_name
 		self.last_name = last_name
 		self.email = (first_name + last_name).lower() + "@gmail.com"
 		self.subscription_id = subscription_id
+		self.state = state
 
 
 class Questionnaires:
