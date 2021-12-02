@@ -24,6 +24,7 @@ def get_user_input():
     print("[2] To create a questionnaire.")
     print("[3] To view amount of responses to a questionnaire.")
     print("[4] To respond to a questionnaire.")
+    print("[5] Create a new user.")
     print("[q] To quit.")
     print("") # buffer space for readability
     return input("Input: ")
@@ -72,6 +73,12 @@ def create_questionnaire():
             print("1 record inserted, ID:", curOptionID)
 
     print("Questionnaire Successfully Created! The Questionnaire ID is " + str(curQuestionnaireID))
+    
+    # Adds the creator of the questionnaire to permissions table with role creator
+    sql = "INSERT INTO permissions (user_id, questionnaire_id, role_id) VALUES (%s, %s, %s)"
+    val = (int(userID), int(curQuestionnaireID), "creator")
+    cur.execute(sql, val)
+    db.commit()
             
 # function to view the responses for each question in a questionnaire
 def view_responses():
@@ -136,6 +143,18 @@ def take_questionnaire():
         
     print("Questionnaire " + str(questionnaireID) + " Finished. Thank you for sending in your responses!")
 
+# function to add a new user to the database
+def add_new_user():
+    firstName = input("Enter user's first name: ")
+    lastName = input("Enter user's last name: ")
+    email = input("Enter user's email address: ")
+    sql = "INSERT INTO users (first_name, last_name, email) VALUES (%s, %s, %s)"
+    val = (firstName, lastName, email)
+    cur.execute(sql, val)
+    db.commit()
+    newUserID = cur.lastrowid
+    print("\nUser successfully created! The assigned User ID is: " + str(newUserID))
+
 # this loop runs until the user inputs 'q' on the take command screen
 while i != 'q':
     i = get_user_input()
@@ -148,6 +167,8 @@ while i != 'q':
         view_responses()
     elif i == '4':
         take_questionnaire()
+    elif i == '5':
+        add_new_user()
         
 
 # sample code for querying, visit https://www.w3schools.com/python/python_mysql_getstarted.asp for more info on stuff
