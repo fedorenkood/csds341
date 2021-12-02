@@ -15,11 +15,17 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
-
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	# users = User.query.filter_by(first_name='Joseph').all()
-	return render_template("index.html")
+	return render_template("index.html", data=Questionnaires.query.all())
+
+
+@app.route('/questionnaire/<id>', methods=['GET', 'POST'])
+def questionnaire(id):
+    questions = Questions.query.filter_by(questionnaire_id = id).order_by(Questions.question_id).all()
+    answers = PossibleAnswers.query.join(Questions, PossibleAnswers.question_id == Questions.question_id).filter_by(questionnaire_id = id).order_by(Questions.question_id).all()
+    return render_template("questionnaire.html", questions=questions, answers=answers)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
