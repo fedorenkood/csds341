@@ -58,7 +58,6 @@ def create_questionnaire():
         cur.execute(sql, val)
         db.commit()
         curQuestionID = cur.lastrowid
-        print("1 record inserted, ID:", curQuestionID)
         
         optionAmt = input("Enter the amount of answer choices: ")
         # loop to create options for each question based on the inputted option amount
@@ -69,8 +68,6 @@ def create_questionnaire():
             val = (curQuestionID, optionText)
             cur.execute(sql, val)
             db.commit()
-            curOptionID = cur.lastrowid
-            print("1 record inserted, ID:", curOptionID)
 
     print("Questionnaire Successfully Created! The Questionnaire ID is " + str(curQuestionnaireID))
     
@@ -103,7 +100,11 @@ def view_responses():
             sql = "SELECT count(response_id) FROM possible_answers, responses WHERE responses.option_id = possible_answers.option_id AND possible_answers.option_id = (%s) GROUP BY possible_answers.option_id"
             val = (int(a[0]),)
             cur.execute(sql, val)
-            count = cur.fetchone()[0]
+            count = cur.fetchone()
+            if count is None:
+                count = 0
+            else:
+                count = count[0]
             totalRespondents = totalRespondents + int(count)
             print("\t" + a[1] + "\t" + str(count))
             
