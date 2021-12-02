@@ -14,6 +14,9 @@ i = ''
 sql = ''
 val = ''
 
+userID = input("Enter your UserID: ")
+print("Thank you! Your user ID will be used to save your responses.")
+
 # function that receives user input, add more print options for more functionalities
 def get_user_input():
     print("") # buffer space for readability
@@ -126,9 +129,7 @@ def take_questionnaire():
         # answer chooses and option by inputting the number value on console app
         choice = input("Enter answer choice (digit value): ")
         sql = "INSERT INTO responses (user_id, option_id, date_time) VALUES (%s, %s, %s)"
-        
-        # user_id value? this would be functional in web app but not here in console app unless user manually enters at start of app run
-        val = (int(5), answers[int(choice)-1][0], datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
+        val = (int(userID), answers[int(choice)-1][0], datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S'))
         cur.execute(sql, val)
         db.commit() 
         print("")
