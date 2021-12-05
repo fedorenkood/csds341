@@ -186,6 +186,16 @@
     \includegraphics{responsecountqueryalgebra.PNG}
     Result of running this query with q.question\_id = 1:
     \includegraphics{responsecountquery.PNG}
+    \\
+    \\
+    Find all of the questions that were responded to by people from a specific state and show what multiple choice answer they picked. Change state as necessary, it is Illinois for example here:
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    SELECT q.question_text, p.possible_answer as answer, u.user_id, first_name, last_name, state
+    FROM Users u, Responses r, Questions q, Possible_Answers p
+    WHERE r.option_id = p.option_id AND p.question_id = q.question_id AND u.user_id = r.user_id AND state = "IL";
+    \end{lstlisting}
+    Result of running this query with state = "IL":\\
+    \includegraphics{questionstatequeryresult.PNG}
     \section{Implementation}
     We used MySQL as our database management system. We used Python to create a console app that allows for many interactions with the system from the command line, such as adding a new user, viewing the list of questionnaires on the website, answering a questionnaire, viewing the answers to a particular questionnaire, and creating a questionnaire. This Python app uses MySQL Connector to connect to MySQL, so it may be necessary to run \emph{python -m pip install mysql-connector-python}. We also started developing a Python Flask app using SQLAlchemy to connect to the MySQL database. To run this app, you need to go to the directory csds341\_server and then run \emph{pip install -r requirements.txt} to be able to run it, and then run \emph{flask run}, and then go to your web browser of choice and visit 127.0.01:5000 or localhost:5000 to see it.
     \section{Demo}
