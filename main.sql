@@ -142,6 +142,15 @@ FROM (Questionnaires as q
 WHERE q.questionnaire_id = "QuestionnaireID"
     AND r.user_id = "UserID"
 
+/* Retrieve user answers for a specific questionnaire */
+SELECT r.response_id, r.option_id, r.date_time
+FROM Questionnaires as q, Questions as q2, Possible_Answers as p, Responses as r
+WHERE r.option_id = p.option_id 
+    AND p.question_id = q2.question_id 
+    AND q.questionnaire_id = q2.questionnaire_id
+    AND q.questionnaire_id = "QuestionnaireID"
+    AND r.user_id = "UserID"
+
 /* Retrieve questions related to questionnaire */
 SELECT *
 FROM Questions
