@@ -82,6 +82,9 @@
     \emph{Responses} contains all of the selected possible answers by each user for a questionnaire. The primary key for Responses is response\_id. The foreign key user\_id points to the correct user that selected the response. The foreign key option\_id shows which option the user had selected by linking it to the possible answer. The attribute date\_time lets us know what time the user had selected their response.
     \\
     \\
+    \emph{Data Generation}
+    We took an approach of generating data for tables with least dependencies at first. Those are: Roles and Subscription. Then, we generated data for Users, using random name generator plugin and using Subscription table. Then, we used random questions from the internet to generate Quesionnaires, which randomly chose questions from the list of random Questions. Then, using the generated Questions table, we used random string generator to generate Possible Answers. Using the tables for Questionnaires, Roles and Users, we generated creators, moderators and participants for each questionnaire. Based on the participant roles in the Permissions table, we randomly selected responses to the corresponding Questionnaires and Answers for each participant in a given Questionnaire. The responses were recorded in the Responses table. 
+    
     Since our project depends on user-generated data, we had to artificially generate random data to demonstrate how our database works. We generated data using a Python script which created hundreds of users with random names, multiple choice possible answers to questions, and responses to questions and questionnaires.
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
