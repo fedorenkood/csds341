@@ -175,10 +175,21 @@
         FOREIGN KEY(role_id) REFERENCES Roles(role_id) ON DELETE CASCADE
     );
     \end{lstlisting}
+    \section{Example Queries}
+    Find the number of responses to a specific question. Replace the first predicate in WHERE to specify which question. Query in SQL:
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+        SELECT count(r.response_id)
+        FROM Questions as q, Possible_Answers as p, Responses as r
+        WHERE q.question_id = "question_id" AND p.question_id = q.question_id AND r.option_id = p.option_id
+    \end{lstlisting}
+    Query in relational algebra:\\
+    \includegraphics{responsecountqueryalgebra.PNG}
+    Result of running this query with q.question\_id = 1:
+    \includegraphics{responsecountquery.PNG}
     \section{Implementation}
     We used MySQL as our database management system. We used Python to create a console app that allows for many interactions with the system from the command line, such as adding a new user, viewing the list of questionnaires on the website, answering a questionnaire, viewing the answers to a particular questionnaire, and creating a questionnaire. This Python app uses MySQL Connector to connect to MySQL, so it may be necessary to run \emph{python -m pip install mysql-connector-python}. We also started developing a Python Flask app using SQLAlchemy to connect to the MySQL database. To run this app, you need to go to the directory csds341\_server and then run \emph{pip install -r requirements.txt} to be able to run it, and then run \emph{flask run}, and then go to your web browser of choice and visit 127.0.01:5000 or localhost:5000 to see it.
     \section{Demo}
-    We did a presentation in the last week of class. The slides are in the writeup folder in a file called "CSDS 341 Project Presentation".pdf. We also did a demo to our TA where we showed him our schemas which were significantly updated from our initial report with many additional constraints. We showed him that we successfully created our MySQL database for the project named "csds341_questionnaire" and our progress on our Flask web app and our Python console app for interacting with the questionnaire system from the command line. We also showed him our sample queries and the successful results of running them.
+    We did a presentation in the last week of class. The slides are in the writeup folder in a file called "CSDS 341 Project Presentation".pdf. We also did a demo to our TA where we showed him our schemas which were significantly updated from our initial report with many additional constraints. We showed him that we successfully created our MySQL database for the project named "csds341\_questionnaire" and our progress on our Flask web app and our Python console app for interacting with the questionnaire system from the command line. We also showed him our sample queries and the successful results of running them.
     \section{What We Learned}
     During the course of this project, we learned about how to design our own database system and how to connect the many parts of our project and application together. The lectures taught us how to analyze and describe databases, schemas, and ER diagrams that other people have already made, but the project required us to create our own project and then design a database from scratch for it. The course helped a lot with the theory behind designing a database such as through the rules for ER diagrams and normal forms for schemas, but working on the project gave us the practical experience of actually creating our own database system. We also learned how to use MySQL for our project. Additionally, we learned about how to create web apps using Flask and how to connect MySQL to Python through SQLAlchemy.
 
