@@ -70,7 +70,7 @@
     \emph{Questions} contains all of the questions associated with their specific questionnaire. The questions are made by users when creating a questionnaire, and the primary key for Questions is question\_id. When a question is created it has a foreign key questionnaire\_id to associate it with the correct questionnaire that the question originates from. The attribute question\_text contains the text of the question.
     \\
     \\
-    \emph{Possible_Answers} contains all possible answers for a question. The primary key for a possible answer is option\_id. When a possible answer is created it has a foreign key question\_id to associate it with the proper question that the possible answer should be under. The attribute possible\_answer contains the text of the possible answer.
+    \emph{Possible\_Answers} contains all possible answers for a question. The primary key for a possible answer is option\_id. When a possible answer is created it has a foreign key question\_id to associate it with the proper question that the possible answer should be under. The attribute possible\_answer contains the text of the possible answer.
     \\
     \\
     \emph{Responses} contains all of the selected possible answers by each user for a questionnaire. The primary key for Responses is response\_id. The foreign key user\_id points to the correct user that selected the response. The foreign key option\_id shows which option the user had selected by linking it to the possible answer. The attribute date\_time lets us know what time the user had selected their response.
@@ -361,10 +361,11 @@
         \1 Helped with final report
     \end{outline}
     David:
-    \begin{enumerate}
-        \item Sample queries, including SQL, RA, and TRC queries
-        \item Background section of report
-        \item Data description
+    \begin{outline}
+        \1 Sample queries, including SQL, RA, and TRC queries
+        \1 Background section of report
+        \1 Data description
+        \1 Final report
     \end{enumerate}
     Matthew:
     \\
