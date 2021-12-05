@@ -64,6 +64,18 @@
     \emph{Subscription} is the table that holds all of the info about all of the subscriptions available on the website. Users are limited about how many surveys they are allowed to create depending on their subscription plan. subscription\_id is the primary key and each subscription level has a unique id. Each subscription also has a survey\_limit associated with it that is the number of surveys a user with that subscription is allowed to create. This data is generated only by the administrator of the website as tuples are only added, updated, or deleted whenever the admin changes the subscription offering.
     \\
     \\
+    \emph{Questionnaires} is the table that contains all questionnaires for the website. questionnaire\_id is the primary key of Questionnaires. Each questionnaire is made by users and when a user creates a questionnaire they are automatically added in the permissions table as being a creator for that questionnaire\_id.  The attribute number\_of\_questions is to hold how many questions the questionnaire contains.
+    \\
+    \\
+    \emph{Questions} contains all of the questions associated with their specific questionnaire. The questions are made by users when creating a questionnaire, and the primary key for Questions is question\_id. When a question is created it has a foreign key questionnaire\_id to associate it with the correct questionnaire that the question originates from. The attribute question\_text contains the text of the question.
+    \\
+    \\
+    \emph{Possible_Answers} contains all possible answers for a question. The primary key for a possible answer is option\_id. When a possible answer is created it has a foreign key question\_id to associate it with the proper question that the possible answer should be under. The attribute possible\_answer contains the text of the possible answer.
+    \\
+    \\
+    \emph{Responses} contains all of the selected possible answers by each user for a questionnaire. The primary key for Responses is response\_id. The foreign key user\_id points to the correct user that selected the response. The foreign key option\_id shows which option the user had selected by linking it to the possible answer. The attribute date\_time lets us know what time the user had selected their response.
+    \\
+    \\
     Since our project depends on user-generated data, we had to artificially generate random data to demonstrate how our database works. We generated data using a Python script which created hundreds of users with random names, multiple choice possible answers to questions, and responses to questions and questionnaires.
     \section{ER Diagram}
     \FloatBarrier
