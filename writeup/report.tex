@@ -47,10 +47,16 @@
 
 \begin{document}
     \maketitle
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Background}
     Questionnaires and surveys are very important for understanding and shaping the world. Surveys are one of the main tools for collection and analysis of data for making decisions. For example, United States uses the Census and the American Community Survey to understand how country demographics is shifting and to make decisions about the allocation of resources. Researchers use questionnaires for scientific studies to understand both the social and natural worlds. Psychologists in particular make great use of Likert scales in questionnaires to help build our collective knowledge. 
     \newline\newline\indent Therefore, streamlining the process of collecting and analysing surveys using technology is very beneficial for decision-making. Our application would allow users to create their own questionnaires, distribute and analyse them easily. Additionally, application would allow for streamlining the decision-making process based on the analysis of data to an advanced degree.
     \newline\newline\indent This will be accomplished through the design of the database allowing for multiple functionalities based on the user. With different roles and permissions a user will be able to participate in questionnaires or be the creator of a questionnaire. Then, questionnaires will have a certain amount of questions and these questions will have possible answers created by the maker of the questionnaire. Responses will be recorded and using the relationships in the database queries can be written to analyze the gathered data. This survey tool streamlines the process of creating and answering surveys and allows for data analysis to make decisions or understand the participants choices.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Data Description}
     \emph{Users} contains information about all of the users, questionnaire creators and reponders, that interact with the website. This data will be obtained through a registration form on the website for creating accounts that asks users for their names, emails, region, and subscription type. At minimum, every user must have at least an email since it serves as a unique identifier that allows them to log in, so the email attribute of \emph{Users} is UNIQUE and NOT NULL.
     \\
@@ -65,6 +71,9 @@
     \\
     \\
     Since our project depends on user-generated data, we had to artificially generate random data to demonstrate how our database works. We generated data using a Python script which created hundreds of users with random names, multiple choice possible answers to questions, and responses to questions and questionnaires.
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{ER Diagram}
     \FloatBarrier
     \begin{figure}[H] 
@@ -73,6 +82,9 @@
         }
     \end{figure}
     \newpage
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Functional Dependencies and BCNF}
     \tb{Users} \\
     This entity represents users of the questionnaire website.
@@ -132,6 +144,9 @@
     F7 = \{response\_id $\rightarrow$ user\_id, option\_id, date\_time\} \\
     Since response\_id is a superkey Responses is in BCNF form. 
     \\
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Schemas}
     \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
         CREATE TABLE Users
@@ -225,58 +240,77 @@
         FOREIGN KEY(option_id) REFERENCES Possible_Answers(option_id) ON DELETE CASCADE
     );
     \end{lstlisting}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Example Queries}
-    Find the number of responses to a specific question. Replace the first predicate in WHERE to specify which question. Query in SQL:
+    \subsection*{Query 1}
+    \noindent Find the number of responses to a specific question. Replace the first predicate in WHERE to specify which question. Query in SQL:
     \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
         SELECT count(r.response_id)
         FROM Questions as q, Possible_Answers as p, Responses as r
         WHERE q.question_id = "question_id" AND p.question_id = q.question_id AND r.option_id = p.option_id
     \end{lstlisting}
-    Query in relational algebra:\\
+    \noindent Query in relational algebra:\\
     \includegraphics{responsecountqueryalgebra.PNG}
-    Result of running this query with q.question\_id = 1:
+    \noindent Result of running this query with q.question\_id = 1:
     \includegraphics{responsecountquery.PNG}
-    \\
-    \\
-    Find all of the questions that were responded to by people from a specific state and show what multiple choice answer they picked. Change state as necessary, it is Illinois for example here:
+
+    \subsection*{Query 2}
+    \noindent Find all of the questions that were responded to by people from a specific state and show what multiple choice answer they picked. Change state as necessary, it is Illinois for example here:
     \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
-    SELECT q.question_text, p.possible_answer as answer, u.user_id, first_name, last_name, state
-    FROM Users u, Responses r, Questions q, Possible_Answers p
-    WHERE r.option_id = p.option_id AND p.question_id = q.question_id AND u.user_id = r.user_id AND state = "IL";
+        SELECT q.question_text, p.possible_answer as answer, u.user_id, first_name, last_name, state
+        FROM Users u, Responses r, Questions q, Possible_Answers p
+        WHERE r.option_id = p.option_id AND p.question_id = q.question_id AND u.user_id = r.user_id AND state = "IL";
     \end{lstlisting}
-    Query in relational algebra: \\
+    \noindent Query in relational algebra: \\
     \includegraphics[scale=0.6]{questionstatequeryalgebra.PNG}
-    Query in tuple relational calculus: \\
+    \noindent Query in tuple relational calculus: \\
     \includegraphics[scale=0.7]{questionstatequerycalculus3.PNG}
     Result of running this query with state = "IL":\\
     \includegraphics{questionstatequeryresult.PNG}
-    \\
-    \\
-    Retrieve user answers for a specific questionnaire.
+
+    \subsection*{Query 3}
+    \noindent Retrieve user answers for a specific questionnaire.
     \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
-    SELECT r.option_id, r.date_time
-    FROM Questionnaires as q, Questions as q2, Possible_Answers as p, Responses as r
-    WHERE r.option_id = p.option_id 
-        AND p.question_id = q2.question_id 
-        AND q.questionnaire_id = q2.questionnaire_id
-        AND q.questionnaire_id = "QuestionnaireID"
-        AND r.user_id = "UserID";
+        SELECT r.option_id, r.date_time
+        FROM Questionnaires as q, Questions as q2, Possible_Answers as p, Responses as r
+        WHERE r.option_id = p.option_id 
+            AND p.question_id = q2.question_id 
+            AND q.questionnaire_id = q2.questionnaire_id
+            AND q.questionnaire_id = "QuestionnaireID"
+            AND r.user_id = "UserID";
     \end{lstlisting}
-    Query in relational algebra: \\
-    $\Pi_{r.option\_id,\ r.date\_time}(\sigma_{q.questionnaire\_id\ =\ "QuestionnaireID"\ \wedge\ r.user\_id\ =\ "UserID"}(\rho_{q}Questionnaires\ \bowtie\ \rho_{q2}Questions\ \bowtie\ \rho_{p}Possible\_Answers\ \bowtie\ \rho_{r}Responses))$
-    Query in tuple relational calculus: \\
-    $\{t\ |\ (\exists r)\ (r\ \in\ Responses\ \wedge\ t[option\_id] = r[option\_id]\ \wedge\ t[date\_time] = r[date\_time]
-\newline\wedge\ (\exists p)\ (p\ \in\ Possible\_Answers\ \wedge\ r[option\_id]=p[option\_id]
-\newline\wedge\ (\exists q2)\ (q2\ \in\ Questions\ \wedge\ p[question\_id] = q2[question\_id]
-\newline\wedge\ (\exists q)\ (q\ \in\ Questionnaires\ \wedge\ q2[questionnaire\_id] = q[questionnaire\_id]\ \wedge\ r.user\_id\ =\ "UserID"\ \wedge\ q.questionnaire\_id\ =\ "QuestionnaireID"))))\}$
-    Result of running this query:\\
+    \noindent Query in relational algebra: 
+    \begin{align*}
+        \Pi&_{r.option\_id,\ r.date\_time}(\sigma_{q.questionnaire\_id\ =\ "QuestionnaireID"\ \wedge\ r.user\_id\ =\ "UserID"}
+        (\\
+        &\rho_{q}Questionnaires\ \bowtie\ \rho_{q2}Questions\ \bowtie\ \rho_{p}Possible\_Answers\ \bowtie\ \rho_{r}Responses\\
+        ))&
+    \end{align*}
+    
+    \bigskip
+    \noindent \noindent \noindent Query in tuple relational calculus: 
+    \begin{align*}
+        \{t\ |\ (&\exists r)\ (r\ \in\ Responses\ \wedge\ t[option\_id] = r[option\_id]\ \wedge\ t[date\_time] = r[date\_time]\\
+        \newline\wedge\ (&\exists p)\ (p\ \in\ Possible\_Answers\ \wedge\ r[option\_id]=p[option\_id]\\
+        \newline\wedge\ (&\exists q2)\ (q2\ \in\ Questions\ \wedge\ p[question\_id] = q2[question\_id]\\
+        \newline\wedge\ (&\exists q)\ (q\ \in\ Questionnaires\ \wedge\ q2[questionnaire\_id] = q[questionnaire\_id]\ \wedge\ \\
+        &r.user\_id\ =\ "UserID"\ \wedge\ q.questionnaire\_id\ =\ "QuestionnaireID"))))\}
+    \end{align*}
+    \noindent Result of running this query:\\
     \includegraphics{questionstatequeryresult.PNG}
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Implementation}
     We used MySQL as our database management system. We used Python to create a console app that allows for many interactions with the system from the command line, such as adding a new user, viewing the list of questionnaires on the website, answering a questionnaire, viewing the answers to a particular questionnaire, and creating a questionnaire. This Python app uses MySQL Connector to connect to MySQL, so it may be necessary to run \emph{python -m pip install mysql-connector-python}. We also started developing a Python Flask app using SQLAlchemy to connect to the MySQL database. To run this app, you need to go to the directory csds341\_server and then run \emph{pip install -r requirements.txt} to be able to run it, and then run \emph{flask run}, and then go to your web browser of choice and visit 127.0.01:5000 or localhost:5000 to see it.
     \section{Demo}
     We did a presentation in the last week of class. The slides are in the writeup folder in a file called "CSDS 341 Project Presentation".pdf. We also did a demo to our TA where we showed him our schemas which were significantly updated from our initial report with many additional constraints. We showed him that we successfully created our MySQL database for the project named "csds341\_questionnaire" and our progress on our Flask web app and our Python console app for interacting with the questionnaire system from the command line. We also showed him our sample queries and the successful results of running them.
 
-
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{WEB App}
     \FloatBarrier
     \begin{figure}[H] 
@@ -303,7 +337,9 @@
         }
     \end{figure}
 
-
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Console App}
     \FloatBarrier
     \begin{figure}[H] 
@@ -336,7 +372,9 @@
         }
     \end{figure}
 
-
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{Contributions of Each Team Member}
     Oleksii:
     \begin{outline}
@@ -357,6 +395,9 @@
     Matthew:
     \\
     Preeti:
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     \section{What We Learned}
     During the course of this project, we learned about how to design our own database system and how to connect the many parts of our project and application together. The lectures taught us how to analyze and describe databases, schemas, and ER diagrams that other people have already made, but the project required us to create our own project and then design a database from scratch for it. The course helped a lot with the theory behind designing a database such as through the rules for ER diagrams and normal forms for schemas, but working on the project gave us the practical experience of actually creating our own database system. We also learned how to use MySQL for our project. Additionally, we learned about how to create web apps using Flask and how to connect MySQL to Python through SQLAlchemy.
 
