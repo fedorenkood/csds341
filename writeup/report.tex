@@ -194,11 +194,32 @@
     FROM Users u, Responses r, Questions q, Possible_Answers p
     WHERE r.option_id = p.option_id AND p.question_id = q.question_id AND u.user_id = r.user_id AND state = "IL";
     \end{lstlisting}
-    Query in relation algebra: \\
+    Query in relational algebra: \\
     \includegraphics[scale=0.6]{questionstatequeryalgebra.PNG}
     Query in tuple relational calculus: \\
     \includegraphics[scale=0.7]{questionstatequerycalculus3.PNG}
     Result of running this query with state = "IL":\\
+    \includegraphics{questionstatequeryresult.PNG}
+    \\
+    \\
+    Retrieve user answers for a specific questionnaire.
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    SELECT r.option_id, r.date_time
+    FROM Questionnaires as q, Questions as q2, Possible_Answers as p, Responses as r
+    WHERE r.option_id = p.option_id 
+        AND p.question_id = q2.question_id 
+        AND q.questionnaire_id = q2.questionnaire_id
+        AND q.questionnaire_id = "QuestionnaireID"
+        AND r.user_id = "UserID";
+    \end{lstlisting}
+    Query in relational algebra: \\
+    $\Pi_{r.option\_id,\ r.date\_time}(\sigma_{q.questionnaire\_id\ =\ "QuestionnaireID"\ \wedge\ r.user\_id\ =\ "UserID"}(\rho_{q}Questionnaires\ \bowtie\ \rho_{q2}Questions\ \bowtie\ \rho_{p}Possible\_Answers\ \bowtie\ \rho_{r}Responses))$
+    Query in tuple relational calculus: \\
+    $\{t\ |\ (\exists r)\ (r\ \in\ Responses\ \wedge\ t[option\_id] = r[option\_id]\ \wedge\ t[date\_time] = r[date\_time]
+\newline\wedge\ (\exists p)\ (p\ \in\ Possible\_Answers\ \wedge\ r[option\_id]=p[option\_id]
+\newline\wedge\ (\exists q2)\ (q2\ \in\ Questions\ \wedge\ p[question\_id] = q2[question\_id]
+\newline\wedge\ (\exists q)\ (q\ \in\ Questionnaires\ \wedge\ q2[questionnaire\_id] = q[questionnaire\_id]\ \wedge\ r.user\_id\ =\ "UserID"\ \wedge\ q.questionnaire\_id\ =\ "QuestionnaireID"))))\}$
+    Result of running this query:\\
     \includegraphics{questionstatequeryresult.PNG}
     \section{Implementation}
     We used MySQL as our database management system. We used Python to create a console app that allows for many interactions with the system from the command line, such as adding a new user, viewing the list of questionnaires on the website, answering a questionnaire, viewing the answers to a particular questionnaire, and creating a questionnaire. This Python app uses MySQL Connector to connect to MySQL, so it may be necessary to run \emph{python -m pip install mysql-connector-python}. We also started developing a Python Flask app using SQLAlchemy to connect to the MySQL database. To run this app, you need to go to the directory csds341\_server and then run \emph{pip install -r requirements.txt} to be able to run it, and then run \emph{flask run}, and then go to your web browser of choice and visit 127.0.01:5000 or localhost:5000 to see it.
