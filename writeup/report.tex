@@ -65,6 +65,13 @@
     \\
     \\
     Since our project depends on user-generated data, we had to artificially generate random data to demonstrate how our database works. We generated data using a Python script which created hundreds of users with random names, multiple choice possible answers to questions, and responses to questions and questionnaires.
+    \section{ER Diagram}
+    \FloatBarrier
+    \begin{figure}[H] 
+        \centerline{
+        \includegraphics[width=\textwidth]{er_diagram.png}
+        }
+    \end{figure}
     \section{Functional Dependencies}
     For the Users table, the functional dependencies (FDs) are user\_id $\rightarrow$ first\_name, last\_name, email, subscription\_id and email $\rightarrow$ user\_id ,first\_name, last\_name, subscription\_id.
     The first functional dependency exists because user\_id is the primary key for Users and the second functional dependency exists because each email is associated with only one user, making it another candidate key for Users.
