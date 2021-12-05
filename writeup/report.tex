@@ -159,6 +159,72 @@
         FOREIGN KEY(role_id) REFERENCES Roles(role_id) ON DELETE CASCADE
     );
     \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Roles
+    (
+        role_id varchar(30),
+        edit_perm BIT,
+        resp_perm BIT,
+        view_resp_perm BIT,
+        PRIMARY KEY(role_id)
+    );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Subscription
+    (
+        subscription_id INT AUTO_INCREMENT,
+         survey_limit INT,
+        PRIMARY KEY(subscription_id)
+    );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Questionnaires
+    (
+        questionnaire_id INT AUTO_INCREMENT,
+        number_of_questions INT,
+        PRIMARY KEY(questionnaire_id)
+    );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Questionnaires
+    (
+        questionnaire_id INT AUTO_INCREMENT,
+        number_of_questions INT,
+        PRIMARY KEY(questionnaire_id)
+    );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Questions
+    (
+        question_id BIGINT AUTO_INCREMENT,
+        questionnaire_id INT,
+        question_text VARCHAR(400),
+        PRIMARY KEY(question_id),
+        FOREIGN KEY(questionnaire_id) REFERENCES Questionnaires(questionnaire_id) ON DELETE CASCADE
+    );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Possible_Answers
+    (
+        option_id BIGINT AUTO_INCREMENT,
+        question_id BIGINT,
+        possible_answer VARCHAR(400),
+        PRIMARY KEY(option_id),
+        FOREIGN KEY(question_id) REFERENCES Questions(question_id) ON DELETE CASCADE
+    );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Responses
+    (
+        response_id INT AUTO_INCREMENT,
+        user_id INT,
+        option_id BIGINT,
+        date_time DATETIME,
+        PRIMARY KEY(response_id),
+        FOREIGN KEY(user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+        FOREIGN KEY(option_id) REFERENCES Possible_Answers(option_id) ON DELETE CASCADE
+    );
+    \end{lstlisting}
     \section{Example Queries}
     Find the number of responses to a specific question. Replace the first predicate in WHERE to specify which question. Query in SQL:
     \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
