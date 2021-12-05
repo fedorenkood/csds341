@@ -129,8 +129,35 @@
     F7 = \{response\_id $\rightarrow$ user\_id, option\_id, date\_time\} \\
     Since response\_id is a superkey Responses is in BCNF form. 
     \\
+    \section{Schemas}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+        CREATE TABLE Users
+        (
+            user_id INT AUTO_INCREMENT,
+            first_name VARCHAR(40),
+            last_name VARCHAR(40),
+            email VARCHAR(100) NOT NULL UNIQUE,
+            subscription_id INT,
+            state VARCHAR(10),
+            PRIMARY KEY(user_id),
+            FOREIGN KEY(subscription_id) REFERENCES Subscription(subscription_id) ON DELETE CASCADE
+        );
+    \end{lstlisting}
+    \begin{lstlisting}[language=SQL, columns=flexible, breaklines]
+    CREATE TABLE Permissions
+    (
+        permission_id INT AUTO_INCREMENT,
+        user_id INT,
+        questionnaire_id INT,
+        role_id varchar(30),
+        PRIMARY KEY (permission_id),
+        FOREIGN KEY(user_id) REFERENCES Users(user_id) ON DELETE CASCADE,
+        FOREIGN KEY(questionnaire_id) REFERENCES Questionnaires(questionnaire_id) ON DELETE CASCADE,
+        FOREIGN KEY(role_id) REFERENCES Roles(role_id) ON DELETE CASCADE
+    );
+    \end{lstlisting}
     \section{Implementation}
-    We used MySQL as our database management system.
+    We used MySQL as our database management system. We used Python to create a console app that allows for many interactions with the system from the command line, such as adding a new user, viewing the list of questionnaires on the website, answering a questionnaire, viewing the answers to a particular questionnaire, and creating a questionnaire. This Python app uses MySQL Connector to connect to MySQL, so it may be necessary to run \emph{python -m pip install mysql-connector-python}. We also started developing a Python Flask app using SQLAlchemy to connect to the MySQL database. To run this app, you need to go to the directory csds341\_server and then run \emph{pip install -r requirements.txt} to be able to run it, and then run \emph{flask run}, and then go to your web browser of choice and visit 127.0.01:5000 or localhost:5000 to see it.
 
 
 \end{document}
